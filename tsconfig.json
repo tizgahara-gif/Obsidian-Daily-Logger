@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", "module": "NodeNext", "moduleResolution": "NodeNext",
+    "strict": true, "skipLibCheck": true, "esModuleInterop": true,
+    "resolveJsonModule": true, "noUncheckedIndexedAccess": true,
+    "types": ["node", "chrome"], "outDir": "dist"
+  },
+  "include": ["local/src/**/*.ts", "shared/src/**/*.ts", "extension/src/**/*.ts", "tests/**/*.ts"]
+}
