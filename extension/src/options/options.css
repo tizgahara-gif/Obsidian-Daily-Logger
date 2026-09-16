@@ -1,0 +1,1 @@
+:root{font:15px system-ui}main{max-width:680px;margin:30px auto}fieldset{margin:16px 0;padding:16px}label{display:block;margin:10px 0}input:not([type=checkbox]){display:block;box-sizing:border-box;width:100%;padding:7px}button{padding:8px 12px;margin-right:8px}#message{font-weight:600}

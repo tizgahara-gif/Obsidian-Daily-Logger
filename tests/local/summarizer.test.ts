@@ -1,0 +1,2 @@
+import test from"node:test";import assert from"node:assert/strict";import{mkdtemp}from"node:fs/promises";import os from"node:os";import path from"node:path";import{summarizeDate}from"../../local/src/summarizer.js";import{defaultConfig}from"../../local/src/config.js";
+test("empty day returns NO_DATA and does not call API",async()=>{process.env.ODL_DATA_DIR=await mkdtemp(path.join(os.tmpdir(),"odl-empty-"));const cfg=structuredClone(defaultConfig);cfg.summary.provider="openai";assert.deepEqual(await summarizeDate("2026-09-17",cfg),{status:"NO_DATA"})});

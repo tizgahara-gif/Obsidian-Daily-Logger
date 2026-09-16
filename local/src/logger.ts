@@ -1,0 +1,2 @@
+import { appendFile, mkdir } from "node:fs/promises"; import path from "node:path"; import { dataRoot } from "./config.js";
+export async function log(level: "DEBUG"|"INFO"|"WARN"|"ERROR", message: string, error?: unknown): Promise<void> { const dir=path.join(dataRoot(),"logs"); await mkdir(dir,{recursive:true}); const detail=error instanceof Error ? ` ${error.stack || error.message}` : ""; await appendFile(path.join(dir,"app.log"),`${new Date().toISOString()} ${level} ${message}${detail}\n`,"utf8"); }
