@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+import { loadConfig } from "./config.js"; import { resolveDate } from "./time.js"; import { summarizeDate } from "./summarizer.js";
+async function main(){const [command,...args]=process.argv.slice(2);if(command!=="summarize")throw new Error("Usage: odl summarize --date today|yesterday|YYYY-MM-DD");const idx=args.indexOf("--date"),value=idx>=0?args[idx+1]||"today":"today",cfg=await loadConfig(),date=resolveDate(value,cfg.timezone,cfg.summary.dayBoundaryHour),result=await summarizeDate(date,cfg);process.stdout.write(`${result.status}${result.path?` ${result.path}`:""}\n`)}main().catch(e=>{process.stderr.write(`${(e as Error).message}\n`);process.exitCode=1});
