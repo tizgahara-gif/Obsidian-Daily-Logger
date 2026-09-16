@@ -30,3 +30,7 @@ Chromeの「パッケージ化されていない拡張機能を読み込む」�
 ## Daily Summary連携
 
 `GET /v1/daily?date=YYYY-MM-DD` は、その日の `active`、指定日が一致する `manual_import`、および `manual_note` のみ返します。baselineは除外され、raw canonical dataは要約後も削除されないため、00:05の外部Summary schedulerから安全に再要約できます。
+
+### scheduled 要約
+
+Windows Task Scheduler は毎日00:05に `node dist/local/cli.js summarize --scheduled` を実行します。`StartWhenAvailable` による持ち越し時も、Local Serviceが今日より前の実Activity（active、manual import、manual note）がある未要約・更新済み日から最新の1日だけを選びます。空日を生成したり、複数日を自動バックフィルしたりしません。任意の日の手動処理には `summarize --date YYYY-MM-DD`（または `today` / `yesterday`）を使用します。
