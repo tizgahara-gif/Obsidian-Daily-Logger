@@ -1,6 +1,4 @@
 node_modules/
-dist/
-.env
-*.log
-*.tmp
+.daily-logger/
 coverage/
+*.log
