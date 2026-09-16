@@ -1,5 +1,5 @@
 import { appendFile, mkdir, readFile, rename, writeFile } from "node:fs/promises"; import path from "node:path"; import { dataRoot } from "./config.js";
-export async function ensureDataDirs(): Promise<void> { await Promise.all(["conversations","events","manual-notes","summaries"].map(x=>mkdir(path.join(dataRoot(),"data",x),{recursive:true}))); }
+export async function ensureDataDirs(): Promise<void> { await Promise.all(["conversations","events","manual-notes","summaries","summary-state"].map(x=>mkdir(path.join(dataRoot(),"data",x),{recursive:true}))); }
 export async function appendJsonl(kind: "events"|"manual-notes", date:string, value:unknown): Promise<void> { await ensureDataDirs(); await appendFile(path.join(dataRoot(),"data",kind,`${date}.jsonl`),JSON.stringify(value)+"\n","utf8"); }
 export async function readJsonl<T>(kind:"events"|"manual-notes",date:string):Promise<T[]> { try { return (await readFile(path.join(dataRoot(),"data",kind,`${date}.jsonl`),"utf8")).split(/\r?\n/).filter(Boolean).map(x=>JSON.parse(x) as T); } catch(e) { if((e as NodeJS.ErrnoException).code==="ENOENT") return []; throw e; } }
 export async function atomicJson(file:string,value:unknown):Promise<void>{ await mkdir(path.dirname(file),{recursive:true}); const temp=`${file}.${process.pid}.tmp`; await writeFile(temp,JSON.stringify(value,null,2),"utf8"); await rename(temp,file); }

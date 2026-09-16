@@ -18,7 +18,7 @@ $tokenFile = Join-Path $configDir "auth-token"; if (-not (Test-Path $tokenFile))
 $node=(Get-Command node).Source
 $serviceAction=New-ScheduledTaskAction -Execute $node -Argument ('"{0}"' -f (Join-Path $root "dist\local\server.js")) -WorkingDirectory $root
 Register-ScheduledTask -TaskName "Obsidian Daily Logger - Service" -Action $serviceAction -Trigger (New-ScheduledTaskTrigger -AtLogOn) -Force | Out-Null
-$summaryAction=New-ScheduledTaskAction -Execute $node -Argument ('"{0}" summarize --date yesterday' -f (Join-Path $root "dist\local\cli.js")) -WorkingDirectory $root
+$summaryAction=New-ScheduledTaskAction -Execute $node -Argument ('"{0}" summarize --scheduled' -f (Join-Path $root "dist\local\cli.js")) -WorkingDirectory $root
 $trigger=New-ScheduledTaskTrigger -Daily -At $summaryTime; $settings=New-ScheduledTaskSettingsSet -StartWhenAvailable -RestartCount 4 -RestartInterval (New-TimeSpan -Minutes 15)
 Register-ScheduledTask -TaskName "Obsidian Daily Logger - Daily Summary" -Action $summaryAction -Trigger $trigger -Settings $settings -Force | Out-Null
 Write-Host "Installed. Copy this token into the Chrome extension options:"; Get-Content $tokenFile
